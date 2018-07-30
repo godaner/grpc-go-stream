@@ -7,33 +7,44 @@ import (
 	"fmt"
 )
 type StudentInfoServerImpl struct{
-	StudentInfoResponse	[]*pb.StudentInfoResponse
 }
 
 func (server *StudentInfoServerImpl) GetStudentInfo(ctx context.Context, in *pb.StudentInfoRequest) (*pb.StudentInfoResponse, error){
 	return &pb.StudentInfoResponse{
-		Id:987,
-		Name:"张大可",
-		Age:9998,
+		Id:in.Id+1,
+		Name:"server back : "+in.Name,
+		Age:in.Age+1,
 	}, nil
 }
 
 func (server *StudentInfoServerImpl) UpdateStudentInfo(stream pb.StudentInfo_UpdateStudentInfoServer)(error){
 	for {
+		// read info from client
 		in, err := stream.Recv()
 		if err == io.EOF {
 			fmt.Println("read done")
-			return nil
+			break
 		}
 		if err != nil {
 			fmt.Println("ERR",err)
 			return err
 		}
 		fmt.Println("userinfo ",in)
-		for _, r := range server.StudentInfoResponse{
-			if err := stream.Send(r); err != nil {
-				return err
-			}
+
+	}
+	//send info to client
+
+	StudentInfoResponse:=[]*pb.StudentInfoResponse{
+		{
+			Id:1,
+			Name:"zk",
+			Age:222,
+		},
+	}
+	for _, r := range StudentInfoResponse{
+		if err := stream.Send(r); err != nil {
+			return err
 		}
 	}
+	return nil
 }

@@ -32,6 +32,21 @@ func main() {
 		Name:"1231",
 		Age:123,
 	})
-	fmt.Println("userinfo is ",s.GetAge(),s.GetAge(),s.GetName())
+	fmt.Println("userinfo is : ",s.GetAge()," , ",s.GetAge()," , ",s.GetName())
+
+	//UpdateStudentInfo
+	student.UpdateStudentInfo(c,[]*pb.StudentInfoRequest{
+		{
+			Id:1,
+			Name:"xiaoyu",
+			Age:99,
+		},
+		{
+			Id:2,
+			Name:"godaner",
+			Age:100,
+		},
+	})
+
 
 }
