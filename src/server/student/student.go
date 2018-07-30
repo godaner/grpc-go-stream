@@ -25,7 +25,7 @@ func (server *StudentInfoServerImpl) UpdateStudentInfo(stream pb.StudentInfo_Upd
 		// read info from client
 		in, err := stream.Recv()
 		if err == io.EOF {
-			fmt.Println("read done")
+			//fmt.Println("read done")
 			break
 		}
 		if err != nil {
