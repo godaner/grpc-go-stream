@@ -6,17 +6,17 @@ import (
 	"context"
 	"io"
 )
-func GetStudentInfo(client pb.StudentInfoClient, info *pb.StudentInfoRequest) (*pb.StudentInfoResponse) {
+func GetStudentInfo(client pb.StudentInfoClient, info *pb.StudentInfoRequest) {
 	r, err := client.GetStudentInfo(context.Background(),info)
 	if err != nil {
 		fmt.Println("Could not create Customer: %v", err)
 	}
-	return r
+	fmt.Println("from server , GetStudentInfo userinfo is : ",r.GetAge()," , ",r.GetAge()," , ",r.GetName())
 }
 
 func UpdateStudentInfo(client pb.StudentInfoClient, notes []*pb.StudentInfoRequest){
 
-	fmt.Println("notes",notes)
+	fmt.Println("to server , UpdateStudentInfo notes is : ",notes)
 
 	stream, err := client.UpdateStudentInfo(context.Background())
 	if err != nil {
@@ -30,7 +30,7 @@ func UpdateStudentInfo(client pb.StudentInfoClient, notes []*pb.StudentInfoReque
 			in, err := stream.Recv()
 			if err == io.EOF {
 				//read done.
-				fmt.Println("read done ")
+				//fmt.Println("read done ")
 				//close(waitReceive)
 				waitReceive<-true
 				return
@@ -38,7 +38,8 @@ func UpdateStudentInfo(client pb.StudentInfoClient, notes []*pb.StudentInfoReque
 			if err != nil {
 				fmt.Println("Failed to receive a note : %v", err)
 			}
-			fmt.Println("Got message %s at point(%d, %d)",in.Id,in.Age,in.Name)
+
+			fmt.Println("from server , UpdateStudentInfo info is : ",in.Id,in.Age,in.Name)
 		}
 	}()
 	// send to server

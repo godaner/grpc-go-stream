@@ -5,7 +5,6 @@ import (
 	"google.golang.org/grpc"
 	pb "pb"
 	"client/student"
-	"fmt"
 )
 
 const (
@@ -27,12 +26,12 @@ func main() {
 
 
 	//GetStudentInfo
-	s := student.GetStudentInfo(c,&pb.StudentInfoRequest{
+	student.GetStudentInfo(c,&pb.StudentInfoRequest{
 		Id:1,
 		Name:"1231",
 		Age:123,
 	})
-	fmt.Println("userinfo is : ",s.GetAge()," , ",s.GetAge()," , ",s.GetName())
+
 
 	//UpdateStudentInfo
 	student.UpdateStudentInfo(c,[]*pb.StudentInfoRequest{

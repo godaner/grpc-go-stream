@@ -10,6 +10,9 @@ type StudentInfoServerImpl struct{
 }
 
 func (server *StudentInfoServerImpl) GetStudentInfo(ctx context.Context, in *pb.StudentInfoRequest) (*pb.StudentInfoResponse, error){
+
+	fmt.Println("from client , GetStudentInfo stream is : ",in)
+
 	return &pb.StudentInfoResponse{
 		Id:in.Id+1,
 		Name:"server back : "+in.Name,
@@ -29,7 +32,7 @@ func (server *StudentInfoServerImpl) UpdateStudentInfo(stream pb.StudentInfo_Upd
 			fmt.Println("ERR",err)
 			return err
 		}
-		fmt.Println("userinfo ",in)
+		fmt.Println("from client , UpdateStudentInfo stream is : ",in)
 
 	}
 	//send info to client
