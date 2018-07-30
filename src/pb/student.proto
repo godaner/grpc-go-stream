@@ -1,0 +1,20 @@
+
+syntax = "proto3";
+
+package pd;
+
+message StudentInfoRequest{
+    uint64 id = 1;
+    string name = 2;
+    uint32 age = 3;
+}
+message StudentInfoResponse{
+    uint64 id = 1;
+    string name = 2;
+    uint32 age = 3;
+}
+
+service StudentInfo{
+    rpc GetStudentInfo(StudentInfoRequest) returns (StudentInfoResponse){}
+    rpc UpdateStudentInfo(stream StudentInfoRequest) returns (stream StudentInfoResponse){}
+}
